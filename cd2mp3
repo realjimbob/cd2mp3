@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Standard cdparanoia command to rip all tracks from 1 onwards
+# B should create individual tracks, z accepts no errors, 1 skips the leader
+
+if [ -f ~/bin/functions.sh ]; then
+	source ~/bin/functions.sh
+else
+	echo "Couldn't find functions.sh file"
+	exit 99
+fi
+
+checkfor cdparanoia lame eject
+debecho "All prerequisites found..."
+
+if [ -n "${1}" ]; then
+   mkdir -p "${1}"
+   cd "${1}"
+fi
+
+cdparanoia -B -z 1- &&
+   eject /dev/cdrom
+
+# Start a sub-shell to process the odds: 1, 3, 5, 7, 9
+
+(
+   for i in track?[1,3,5,7,9].cdda.wav; do
+      echo "Encoding ${i} with LAME VBR 4..." &&
+      lame -V 4 --quiet ${i} &&
+      rm ${i}
+   done
+) &
+
+# Process the evens in the current shell: 2, 4, 6, 8, 0
+
+for j in track?[2,4,6,8,0].cdda.wav; do
+   echo "Encoding ${j} with LAME VBR 4..." &&
+   lame -V 4 --quiet ${j} &&
+   rm ${j}
+done
+
+# Wait until all tasks have completed
+wait
