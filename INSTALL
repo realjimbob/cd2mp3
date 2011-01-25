@@ -1,0 +1,9 @@
+CD2MP3 Installation
+
+As this is a simple shell script, installation couldn't be simpler.
+
+1. Copy the cd2mp3 file to an executable directory. ~/bin is recommended.
+2. Ensure that the script is executable. chmod +x cd2mp3.
+
+And there you go, one working installation of cd2mp3. 
+
