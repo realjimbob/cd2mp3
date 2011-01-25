@@ -1,7 +1,20 @@
 #!/bin/bash
 
+################################################################################
+#                                                                              #
+#                      CD2MP3 v1.0 - CD to MP3 Conversion                      #
+#                  Used to convert an entire CD to MP3 files.                  #
+#                                                                              #
+################################################################################
+
 # Standard cdparanoia command to rip all tracks from 1 onwards
 # B should create individual tracks, z accepts no errors, 1 skips the leader
+
+################################################################################
+#                                                                              #
+#                        Load standard shell functions                         #
+#                                                                              #
+################################################################################
 
 if [ -f ~/bin/functions.sh ]; then
 	source ~/bin/functions.sh
