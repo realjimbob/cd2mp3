@@ -16,12 +16,26 @@
 #                                                                              #
 ################################################################################
 
-if [ -f ~/bin/functions.sh ]; then
-	source ~/bin/functions.sh
-else
-	echo "Couldn't find functions.sh file"
-	exit 99
+debecho () {
+if [ ! -z "$DEBUG" ]; then
+	echo ">> ${1}" >&2
 fi
+}
+
+checkfor () {
+for checkit in ${*}; do
+	if ! which ${checkit} &> /dev/null; then
+		echo "Pre-requisites not met -- ${checkit} is not installed."
+		exit 99
+	fi
+done
+}
+
+################################################################################
+#                                                                              #
+#                          Main body of script here.                           #
+#                                                                              #
+################################################################################
 
 checkfor cdparanoia lame eject
 debecho "All prerequisites found..."
